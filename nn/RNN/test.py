@@ -30,6 +30,7 @@ class Args:
         self.epochs = 500
         self.steps = 35
         self.num_hiddens = 256
+        self.num_layers = 2
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # dataset
@@ -142,8 +143,7 @@ def train(use_random_iter=False):
     plt.plot(train_loss, label='train_loss')
     plt.title("loss")
     plt.legend()
-    # plt.show(
-    plt.savefig("1.png")
+    plt.show()
 
 if __name__ == '__main__':
     # args
@@ -152,7 +152,13 @@ if __name__ == '__main__':
     data = Dataset()
     # net
     rnn_layer = nn.RNN(len(data.vocab), args.num_hiddens)
-    net = RNNModel(rnn_layer, vocab_size=len(data.vocab))
+    gru_layer = nn.GRU(len(data.vocab), args.num_hiddens)
+    lstm_layer = nn.LSTM(len(data.vocab), args.num_hiddens)
+    # +深度
+    lstm_layer_1 = nn.LSTM(len(data.vocab), args.num_hiddens, args.num_layers)
+    # +双向
+    lstm_layer_2 = nn.LSTM(len(data.vocab), args.num_hiddens, args.num_layers, bidirectional=True)
+    net = RNNModel(lstm_layer_2, vocab_size=len(data.vocab))
     net = net.to(args.device)
     # loss
     loss = nn.CrossEntropyLoss()
