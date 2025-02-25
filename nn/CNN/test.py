@@ -28,7 +28,9 @@ class Dataset():
         self.flag = flag
         assert self.flag in ['train', 'val'], 'not implement!'
         if self.flag == 'train':
+            # MLP, LeNet
             # self.train_data, self.test_data = load_data(args.batch_size)
+            # AlexNet, VGGNet, NiNNet, GoogLeNet, ResNet, DenseNet
             self.train_data, self.test_data = load_data(args.batch_size, resize=224)
         else:
             self.train_data, self.test_data = load_data(args.batch_size, resize=224)
@@ -122,4 +124,4 @@ if __name__ == '__main__':
     trainer = torch.optim.SGD(net.parameters(), lr=args.lr)
     # train
     train()
-    # pred
+    # predict
