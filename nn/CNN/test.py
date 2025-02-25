@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 
 from data.FashionMNIST import load_data
-from model.net import resnet, init_weights
+from model.net import densenet, init_weights
 
 # random
 seed = 42
@@ -17,7 +17,7 @@ random.seed(seed)
 # args
 class Args:
     def __init__(self) -> None:
-        self.batch_size = 64
+        self.batch_size = 16
         self.lr = 0.1
         self.epochs = 2
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -113,7 +113,7 @@ if __name__ == '__main__':
     # dataset
     data = Dataset()
     # model
-    net = resnet('resnet101')
+    net = densenet('densenet264')
     net.apply(init_weights)
     net = net.to(args.device)
     # loss

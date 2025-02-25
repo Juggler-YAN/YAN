@@ -9,6 +9,7 @@ def init_weights(m):
 
 
 
+# MLP
 MLP = nn.Sequential(nn.Flatten(),
     nn.Linear(784, 256),
     nn.ReLU(),
@@ -16,6 +17,7 @@ MLP = nn.Sequential(nn.Flatten(),
 
 
 
+# LeNet
 LeNet = nn.Sequential(
     nn.Conv2d(1, 6, kernel_size=5, padding=2), nn.Sigmoid(),
     nn.AvgPool2d(kernel_size=2, stride=2),
@@ -28,6 +30,7 @@ LeNet = nn.Sequential(
 
 
 
+# AlexNet
 AlexNet = nn.Sequential(
     nn.Conv2d(1, 96, kernel_size=11, stride=4, padding=1), nn.ReLU(),
     nn.MaxPool2d(kernel_size=3, stride=2),
@@ -46,6 +49,7 @@ AlexNet = nn.Sequential(
 
 
 
+# VGGNet
 def vgg_block(num_convs, in_channels, out_channels):
     layers = []
     for _ in range(num_convs):
@@ -73,6 +77,7 @@ VGGNet = vgg(conv_arch)
 
 
 
+# NiNNet
 def nin_block(in_channels, out_channels, kernel_size, strides, padding):
     return nn.Sequential(
         nn.Conv2d(in_channels, out_channels, kernel_size, strides, padding),
@@ -94,6 +99,7 @@ NiNNet = nn.Sequential(
 
 
 
+# GoogLeNet
 class Inception(nn.Module):
     # c1--c4是每条路径的输出通道数
     def __init__(self, in_channels, c1, c2, c3, c4, **kwargs):
@@ -143,6 +149,7 @@ GoogLeNet = nn.Sequential(b1, b2, b3, b4, b5, nn.Linear(1024, 10))
 
 
 
+# ResNet
 class BasicBlock(nn.Module):
     expansion = 1
 
@@ -253,6 +260,7 @@ def resnet(arch):
 
 
 
+# DenseNet
 def conv_block(input_channels, num_channels):
     return nn.Sequential(
         nn.BatchNorm2d(input_channels), nn.ReLU(),
@@ -316,5 +324,3 @@ def densenet(arch_name):
         'densenet264': [6, 12, 64, 48],
     }
     return DenseNet(arch=arch_layers[arch_name])
-
-DenseNet = densenet('densenet264')
